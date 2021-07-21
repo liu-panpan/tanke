@@ -12,7 +12,7 @@ public class Tank {
     int x;
     int y;
     private Dir dir;
-    private static final int SPEND = 1;
+    private static final int SPEND = 2;
     public static final int WIDTH = ResourceMgr.tankD.getWidth();//坦克的宽度
     public static final int HEIGHT =  ResourceMgr.tankD.getHeight();//坦克的高度
     private boolean alive = true;

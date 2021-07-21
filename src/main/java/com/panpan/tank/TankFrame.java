@@ -17,6 +17,7 @@ public class TankFrame extends Frame {
     static final int GAME_WIDTH = 800;
     static final int GAME_HEIGHT = 600;
     Tank tank = new Tank(200,400,Dir.UP,Group.GOOD,this);
+    Explode explode = new Explode(100,100,this);
     //子弹容器
     List<Bullet> bullets = new ArrayList<>();
     //敌方坦克容器
@@ -58,6 +59,7 @@ public class TankFrame extends Frame {
                 bullets.get(i).collideWith(badTanks.get(j));
             }
         }
+        explode.paint(g);
 
     }
 
