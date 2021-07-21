@@ -17,12 +17,11 @@ public class TankFrame extends Frame {
     static final int GAME_WIDTH = 1080;
     static final int GAME_HEIGHT = 960;
     Tank tank = new Tank(200,400,Dir.UP,Group.GOOD,this);
-    Explode explode = new Explode(100,100,this);
+    List<Explode> explodes = new ArrayList<>();
     //子弹容器
     List<Bullet> bullets = new ArrayList<>();
     //敌方坦克容器
     List<Tank> badTanks = new ArrayList<>();
-//    Bullet bullet = new Bullet(300,300,Dir.DOWN);
 
     public TankFrame() throws HeadlessException {
         setSize(GAME_WIDTH, GAME_HEIGHT);
@@ -45,6 +44,7 @@ public class TankFrame extends Frame {
         g.setColor(Color.WHITE);
         g.drawString("子弹个数: "+bullets.size(),10,60);
         g.drawString("敌人的数量:" + badTanks.size(), 10, 80);
+        g.drawString("爆炸的数量:" + explodes.size(), 10, 100);
         tank.paint(g);
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paint(g);
@@ -59,8 +59,9 @@ public class TankFrame extends Frame {
                 bullets.get(i).collideWith(badTanks.get(j));
             }
         }
-        explode.paint(g);
-
+        for (int i = 0; i < explodes.size(); i++) {
+            explodes.get(i).paint(g);
+        }
     }
 
     Image offScreenImage = null;
