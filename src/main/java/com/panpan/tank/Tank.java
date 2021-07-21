@@ -119,10 +119,15 @@ public class Tank {
                 default:
                     break;
             }
-            if (random.nextInt(10) > 8 && this.group == Group.BAD) {
+            if (random.nextInt(100) > 95 && this.group == Group.BAD) {
                 fire();
+                randomDir();
             }
         }
+    }
+
+    private void randomDir() {
+        this.dir = Dir.values()[random.nextInt(Dir.values().length)];
     }
 
     public void fire() {
