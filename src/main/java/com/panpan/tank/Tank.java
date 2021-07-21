@@ -13,8 +13,8 @@ public class Tank {
     int y;
     private Dir dir;
     private static final int SPEND = 2;
-    public static final int WIDTH = ResourceMgr.tankU.getWidth();//坦克的宽度
-    public static final int HEIGHT =  ResourceMgr.tankU.getHeight();//坦克的高度
+    public static final int WIDTH = ResourceMgr.goodTankU.getWidth();//坦克的宽度
+    public static final int HEIGHT =  ResourceMgr.goodTankU.getHeight();//坦克的高度
     private boolean alive = true;
     private boolean moving = true;
     private TankFrame tankFrame;
@@ -83,16 +83,16 @@ public class Tank {
         }
         switch (dir){
             case UP:
-                g.drawImage(ResourceMgr.tankU,x,y,null);
+                g.drawImage(this.group == Group.GOOD? ResourceMgr.goodTankU : ResourceMgr.badTankU, x, y, null);
                 break;
             case DOWN:
-                g.drawImage(ResourceMgr.tankD,x,y,null);
+                g.drawImage(this.group == Group.GOOD? ResourceMgr.goodTankD : ResourceMgr.badTankD, x, y, null);
                 break;
             case LEFT:
-                g.drawImage(ResourceMgr.tankL,x,y,null);
+                g.drawImage(this.group == Group.GOOD? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
                 break;
             case RIGHT:
-                g.drawImage(ResourceMgr.tankR,x,y,null);
+                g.drawImage(this.group == Group.GOOD? ResourceMgr.goodTankR : ResourceMgr.badTankR, x, y, null);
                 break;
             default:
                 break;
