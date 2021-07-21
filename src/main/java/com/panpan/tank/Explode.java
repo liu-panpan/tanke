@@ -18,6 +18,7 @@ public class Explode {
         this.x = x;
         this.y = y;
         this.tankFrame = tankFrame;
+        new Thread(()->new Audio("audio/explode.wav").play()).start();//为爆炸添加音效
     }
 
     public int getX() {

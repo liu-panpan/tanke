@@ -13,8 +13,8 @@ public class Tank {
     int y;
     private Dir dir;
     private static final int SPEND = 2;
-    public static final int WIDTH = ResourceMgr.tankD.getWidth();//坦克的宽度
-    public static final int HEIGHT =  ResourceMgr.tankD.getHeight();//坦克的高度
+    public static final int WIDTH = ResourceMgr.tankU.getWidth();//坦克的宽度
+    public static final int HEIGHT =  ResourceMgr.tankU.getHeight();//坦克的高度
     private boolean alive = true;
     private boolean moving = true;
     private TankFrame tankFrame;
@@ -129,6 +129,7 @@ public class Tank {
         int x = this.x + WIDTH / 2 - Bullet.WIDTH / 2;
         int y = this.y + HEIGHT / 2 - Bullet.HEIGHT / 2;
         tankFrame.bullets.add(new Bullet(x, y, dir,this.group, tankFrame));
+        if(this.group == Group.GOOD) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
     }
 
     public void die() {

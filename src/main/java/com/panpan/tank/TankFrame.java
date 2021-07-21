@@ -14,8 +14,8 @@ import java.util.List;
  * tank窗口类
  */
 public class TankFrame extends Frame {
-    static final int GAME_WIDTH = 800;
-    static final int GAME_HEIGHT = 600;
+    static final int GAME_WIDTH = 1080;
+    static final int GAME_HEIGHT = 960;
     Tank tank = new Tank(200,400,Dir.UP,Group.GOOD,this);
     Explode explode = new Explode(100,100,this);
     //子弹容器
@@ -105,15 +105,13 @@ public class TankFrame extends Frame {
                 default:
                     break;
             }
-            System.out.println("key Pressed");
             setMainTankDir();
+            new Thread(()->new Audio("audio/tank_move.wav").play()).start();
         }
 
         @Override
         public void keyReleased(KeyEvent e) {
             //键盘抬起来的事件
-            System.out.println("key Released");
-            //键盘按下的事件
             int key = e.getKeyCode();
             switch (key){
                 case KeyEvent.VK_LEFT:
