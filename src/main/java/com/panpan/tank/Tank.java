@@ -9,6 +9,7 @@ import java.util.Random;
  * 坦克类
  */
 public class Tank {
+    public Rectangle rect = new Rectangle();
     int x;
     int y;
     private Dir dir;
@@ -27,6 +28,10 @@ public class Tank {
         this.dir = dir;
         this.tankFrame = tankFrame;
         this.group = group;
+        rect.x = this.x;
+        rect.y = this.y;
+        rect.width = WIDTH;
+        rect.height = HEIGHT;
     }
 
     public boolean isAlive() {
@@ -124,6 +129,8 @@ public class Tank {
                 randomDir();
             }
             boundsCheck();//边界检查
+            rect.x = this.x;
+            rect.y = this.y;
         }
     }
 
