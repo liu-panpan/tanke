@@ -13,7 +13,7 @@ public class Bullet {
     int x;
     int y;
     private Dir dir;
-    private static final int SPEND =6;
+    private static final int SPEND = PropertyMgr.getInt("bulletSpeed");
     public static final int WIDTH = ResourceMgr.bulletD.getWidth();//子弹的宽度
     public static final int HEIGHT =  ResourceMgr.bulletD.getHeight();//子弹的高度
     private boolean isAlive = true;
