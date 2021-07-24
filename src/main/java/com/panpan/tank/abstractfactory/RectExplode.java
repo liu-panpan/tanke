@@ -1,6 +1,8 @@
-package com.panpan.tank;
+package com.panpan.tank.abstractfactory;
 
-import com.panpan.tank.abstractfactory.BaseExplode;
+import com.panpan.tank.Audio;
+import com.panpan.tank.ResourceMgr;
+import com.panpan.tank.TankFrame;
 
 import java.awt.*;
 
@@ -9,14 +11,14 @@ import java.awt.*;
  * @Author LiuPanpan
  * 爆炸
  */
-public class Explode extends BaseExplode {
+public class RectExplode extends BaseExplode {
     int x;
     int y;
     public static final int WIDTH = ResourceMgr.explodes[0].getWidth();//炸弹的宽度
     public static final int HEIGHT =  ResourceMgr.explodes[0].getHeight();//炸弹的高度
     private TankFrame tankFrame;
     private int step = 0;
-    public Explode(int x, int y,TankFrame tankFrame) {
+    public RectExplode(int x, int y, TankFrame tankFrame) {
         this.x = x;
         this.y = y;
         this.tankFrame = tankFrame;
@@ -41,9 +43,14 @@ public class Explode extends BaseExplode {
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(ResourceMgr.explodes[step++],x,y,null);
-        if (step>=ResourceMgr.explodes.length){
+//        g.drawImage(ResourceMgr.explodes[step++],x,y,null);
+        Color c = g.getColor();
+        g.setColor(Color.red);
+        g.fillRect(x, y, step++, step++);
+        step++;
+        if (step>=30){
             tankFrame.explodes.remove(this);
         }
+        g.setColor(c);
     }
 }

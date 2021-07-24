@@ -1,5 +1,7 @@
 package com.panpan.tank;
 
+import com.panpan.tank.abstractfactory.*;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -14,14 +16,16 @@ import java.util.List;
  * tank窗口类
  */
 public class TankFrame extends Frame {
-    static final int GAME_WIDTH = 1080;
-    static final int GAME_HEIGHT = 960;
-    Tank tank = new Tank(200,400,Dir.UP,Group.GOOD,this);
-    List<Explode> explodes = new ArrayList<>();
+    public static final int GAME_WIDTH = 1080;
+    public static final int GAME_HEIGHT = 960;
+    public Tank tank = new Tank(200,400,Dir.UP,Group.GOOD,this);
+    public List<BaseExplode> explodes = new ArrayList<>();
+
+    public GameFactory gameFactory = new DefaultFactory();
     //子弹容器
-    List<Bullet> bullets = new ArrayList<>();
+    public List<BaseBullet> bullets = new ArrayList<>();
     //敌方坦克容器
-    List<Tank> badTanks = new ArrayList<>();
+    public List<BaseTank> badTanks = new ArrayList<>();
 
     public TankFrame() throws HeadlessException {
         setSize(GAME_WIDTH, GAME_HEIGHT);

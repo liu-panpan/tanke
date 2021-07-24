@@ -1,7 +1,6 @@
-package com.panpan.tank;
+package com.panpan.tank.abstractfactory;
 
-import com.panpan.tank.abstractfactory.BaseBullet;
-import com.panpan.tank.abstractfactory.BaseTank;
+import com.panpan.tank.*;
 
 import java.awt.*;
 
@@ -10,7 +9,7 @@ import java.awt.*;
  * @Author LiuPanpan
  * 子弹类
  */
-public class Bullet extends BaseBullet {
+public class RectBullet extends BaseBullet {
     int x;
     int y;
     private Dir dir;
@@ -21,7 +20,7 @@ public class Bullet extends BaseBullet {
     private TankFrame tankFrame;
     private Group group = Group.BAD;
     Rectangle rect = new Rectangle();
-    public Bullet(int x, int y, Dir dir,Group group,TankFrame tankFrame) {
+    public RectBullet(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -69,27 +68,12 @@ public class Bullet extends BaseBullet {
         if (!isAlive){
             tankFrame.bullets.remove(this);
         }else {
-            switch (dir) {
-                case UP:
-                    g.drawImage(ResourceMgr.bulletU, x, y, null);
-                    break;
-                case DOWN:
-                    g.drawImage(ResourceMgr.bulletD, x, y, null);
-                    break;
-                case LEFT:
-                    g.drawImage(ResourceMgr.bulletL, x, y, null);
-                    break;
-                case RIGHT:
-                    g.drawImage(ResourceMgr.bulletR, x, y, null);
-                    break;
-                default:
-                    break;
-            }
+        Color c = g.getColor();
+        g.setColor(Color.ORANGE);
+        g.fillOval(x, y, 20, 20);
+        g.setColor(c);
         }
-//        Color c = g.getColor();
-//        g.setColor(Color.red);
-//        g.fillOval(x, y, WIDTH, HEIGHT);
-//        g.setColor(c);
+
         move();
     }
 
@@ -117,20 +101,20 @@ public class Bullet extends BaseBullet {
 
     /**
      * 坦克和子弹碰撞检测
-     * @param tank
+     * @param baseTank
      */
     @Override
-    public void collideWith(BaseTank tank) {
-        if (this.group == tank.getGroup()){
+    public void collideWith(BaseTank baseTank) {
+        if (this.group == baseTank.getGroup()){
             return;
         }
 //        Rectangle rect1 = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
 //        Rectangle rect2 = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);
-        if(rect.intersects(tank.rect)) {
-            tank.die();
+        if(rect.intersects(baseTank.rect)) {
+            baseTank.die();
             this.die();
-            int eX = tank.getX() + Tank.WIDTH/2 - Explode.WIDTH/2;
-            int eY = tank.getY() + Tank.HEIGHT/2 - Explode.HEIGHT/2;
+            int eX = baseTank.getX() + baseTank.getWidth()/2 - Explode.WIDTH/2;
+            int eY = baseTank.getY() + baseTank.getWidth()/2 - Explode.HEIGHT/2;
             tankFrame.explodes.add(tankFrame.gameFactory.createExplode(eX, eY, tankFrame));
         }
     }
