@@ -21,6 +21,7 @@ public class Tank {
     private TankFrame tankFrame;
     private Random random = new Random();
     private Group group = Group.BAD;
+    private FireStrategy fireStrategy;
 
     public Tank(int x, int y, Dir dir,Group group,TankFrame tankFrame) {
         this.x = x;
@@ -32,6 +33,11 @@ public class Tank {
         rect.y = this.y;
         rect.width = WIDTH;
         rect.height = HEIGHT;
+        if (this.group==Group.GOOD){
+            this.fireStrategy = new FourDirFireStrategy();
+        }else {
+            this.fireStrategy = new DefaultFireStrategy();
+        }
     }
 
     public boolean isAlive() {
@@ -80,6 +86,14 @@ public class Tank {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    public TankFrame getTankFrame() {
+        return tankFrame;
+    }
+
+    public void setTankFrame(TankFrame tankFrame) {
+        this.tankFrame = tankFrame;
     }
 
     public void paint(Graphics g) {
@@ -147,10 +161,7 @@ public class Tank {
     }
 
     public void fire() {
-        int x = this.x + WIDTH / 2 - Bullet.WIDTH / 2;
-        int y = this.y + HEIGHT / 2 - Bullet.HEIGHT / 2;
-        tankFrame.bullets.add(new Bullet(x, y, dir,this.group, tankFrame));
-        if(this.group == Group.GOOD) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
+        this.fireStrategy.fire(this);
     }
 
     public void die() {
