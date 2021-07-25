@@ -16,12 +16,7 @@ import java.util.List;
 public class TankFrame extends Frame {
     static final int GAME_WIDTH = 1080;
     static final int GAME_HEIGHT = 960;
-    Tank tank = new Tank(200,400,Dir.UP,Group.GOOD,this);
-    List<Explode> explodes = new ArrayList<>();
-    //子弹容器
-    List<Bullet> bullets = new ArrayList<>();
-    //敌方坦克容器
-    List<Tank> badTanks = new ArrayList<>();
+    GameModel gameModel = new GameModel();
 
     public TankFrame() throws HeadlessException {
         setSize(GAME_WIDTH, GAME_HEIGHT);
@@ -39,29 +34,8 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
+        gameModel.paint(g);
 //        System.out.println("paint");
-        Color c = g.getColor();
-        g.setColor(Color.WHITE);
-        g.drawString("子弹个数: "+bullets.size(),10,60);
-        g.drawString("敌人的数量:" + badTanks.size(), 10, 80);
-        g.drawString("爆炸的数量:" + explodes.size(), 10, 100);
-        tank.paint(g);
-        for (int i = 0; i < bullets.size(); i++) {
-            bullets.get(i).paint(g);
-        }
-
-        for (int i = 0; i < badTanks.size(); i++) {
-            badTanks.get(i).paint(g);
-        }
-
-        for(int i=0; i<bullets.size(); i++) {
-            for(int j = 0; j<badTanks.size(); j++){
-                bullets.get(i).collideWith(badTanks.get(j));
-            }
-        }
-        for (int i = 0; i < explodes.size(); i++) {
-            explodes.get(i).paint(g);
-        }
     }
 
     Image offScreenImage = null;
@@ -128,7 +102,7 @@ public class TankFrame extends Frame {
                     bD = false;
                     break;
                 case KeyEvent.VK_CONTROL:
-                    tank.fire();
+                    gameModel.mainTank.fire();
                     break;
                 default:
                     break;
@@ -138,15 +112,15 @@ public class TankFrame extends Frame {
 
         private void setMainTankDir() {
             if (!bL&&!bR&&!bU&&!bD){
-                tank.setMoving(false);
+                gameModel.mainTank.setMoving(false);
             }else {
                 Dir dir = Dir.DOWN;
                 if (bL) dir = Dir.LEFT;
                 if (bR) dir = Dir.RIGHT;
                 if (bU) dir = Dir.UP;
                 if (bD) dir = Dir.DOWN;
-                tank.setDir(dir);
-                tank.setMoving(true);
+                gameModel.mainTank.setDir(dir);
+                gameModel.mainTank.setMoving(true);
             }
 
         }

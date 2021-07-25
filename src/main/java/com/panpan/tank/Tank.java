@@ -18,16 +18,17 @@ public class Tank {
     public static final int HEIGHT =  ResourceMgr.goodTankU.getHeight();//坦克的高度
     private boolean alive = true;
     private boolean moving = true;
-    private TankFrame tankFrame;
+//    private TankFrame tankFrame;
     private Random random = new Random();
     private Group group = Group.BAD;
     private FireStrategy fireStrategy;
+    private GameModel gameModel;
 
-    public Tank(int x, int y, Dir dir,Group group,TankFrame tankFrame) {
+    public Tank(int x, int y, Dir dir,Group group,GameModel gameModel) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.tankFrame = tankFrame;
+        this.gameModel = gameModel;
         this.group = group;
         rect.x = this.x;
         rect.y = this.y;
@@ -88,17 +89,17 @@ public class Tank {
         this.group = group;
     }
 
-    public TankFrame getTankFrame() {
-        return tankFrame;
+    public GameModel getGameModel() {
+        return gameModel;
     }
 
-    public void setTankFrame(TankFrame tankFrame) {
-        this.tankFrame = tankFrame;
+    public void setGameModel(GameModel gameModel) {
+        this.gameModel = gameModel;
     }
 
     public void paint(Graphics g) {
         if (!alive){
-            tankFrame.badTanks.remove(this);
+            gameModel.badTanks.remove(this);
         }
         switch (dir){
             case UP:
