@@ -7,7 +7,7 @@ import java.awt.*;
  * @Author LiuPanpan
  * 爆炸
  */
-public class Explode {
+public class Explode extends GameObject{
     int x;
     int y;
     public static final int WIDTH = ResourceMgr.explodes[0].getWidth();//炸弹的宽度
@@ -41,7 +41,7 @@ public class Explode {
     public void paint(Graphics g) {
         g.drawImage(ResourceMgr.explodes[step++],x,y,null);
         if (step>=ResourceMgr.explodes.length){
-            gameModel.explodes.remove(this);
+            gameModel.gameObjects.remove(this);
         }
     }
 }

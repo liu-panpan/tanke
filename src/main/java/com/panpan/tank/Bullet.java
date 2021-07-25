@@ -9,7 +9,7 @@ import java.awt.*;
  * @Author LiuPanpan
  * 子弹类
  */
-public class Bullet {
+public class Bullet extends GameObject{
     int x;
     int y;
     private Dir dir;
@@ -18,9 +18,9 @@ public class Bullet {
     public static final int HEIGHT =  ResourceMgr.bulletD.getHeight();//子弹的高度
     private boolean isAlive = true;
 //    private TankFrame tankFrame;
-    private GameModel gameModel;
+    public GameModel gameModel;
     private Group group = Group.BAD;
-    Rectangle rect = new Rectangle();
+    public Rectangle rect = new Rectangle();
     public Bullet(int x, int y, Dir dir,Group group,GameModel gameModel) {
         this.x = x;
         this.y = y;
@@ -67,7 +67,7 @@ public class Bullet {
 
     public void paint(Graphics g) {
         if (!isAlive){
-            gameModel.bullets.remove(this);
+            gameModel.gameObjects.remove(this);
         }else {
             switch (dir) {
                 case UP:
@@ -125,16 +125,16 @@ public class Bullet {
         }
 //        Rectangle rect1 = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
 //        Rectangle rect2 = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);
-        if(rect.intersects(tank.rect)) {
+        if(rect.intersects(tank.getRect())) {
             tank.die();
             this.die();
             int eX = tank.getX() + Tank.WIDTH/2 - Explode.WIDTH/2;
             int eY = tank.getY() + Tank.HEIGHT/2 - Explode.HEIGHT/2;
-            gameModel.explodes.add(new Explode(eX, eY, gameModel));
+            gameModel.gameObjects.add(new Explode(eX, eY, gameModel));
         }
     }
 
-    private void die() {
+    public void die() {
         this.isAlive = false;
     }
 }

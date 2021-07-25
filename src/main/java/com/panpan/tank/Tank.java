@@ -8,8 +8,8 @@ import java.util.Random;
  * @Author LiuPanpan
  * 坦克类
  */
-public class Tank {
-    public Rectangle rect = new Rectangle();
+public class Tank extends GameObject{
+    private Rectangle rect = new Rectangle();
     int x;
     int y;
     private Dir dir;
@@ -97,9 +97,17 @@ public class Tank {
         this.gameModel = gameModel;
     }
 
+    public Rectangle getRect() {
+        return rect;
+    }
+
+    public void setRect(Rectangle rect) {
+        this.rect = rect;
+    }
+
     public void paint(Graphics g) {
         if (!alive){
-            gameModel.badTanks.remove(this);
+            gameModel.gameObjects.remove(this);
         }
         switch (dir){
             case UP:
@@ -167,5 +175,9 @@ public class Tank {
 
     public void die() {
         this.alive = false;
+    }
+
+    public void stop() {
+        this.moving = false;
     }
 }
