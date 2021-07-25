@@ -2,6 +2,7 @@ package com.panpan.tank;
 
 import com.panpan.tank.cor.BulletTankCollider;
 import com.panpan.tank.cor.Collider;
+import com.panpan.tank.cor.ColliderChain;
 import com.panpan.tank.cor.TankTankCollider;
 
 import java.awt.*;
@@ -16,6 +17,7 @@ public class GameModel {
 
     Collider collider = new BulletTankCollider();
     Collider collider1 = new TankTankCollider();
+    ColliderChain colliderChain = new ColliderChain();
 
     public GameModel() {
         int count = Integer.parseInt(String.valueOf(PropertyMgr.get("initTankCount")));
@@ -68,8 +70,9 @@ public class GameModel {
                 GameObject gameObject1 = gameObjects.get(i);
                 GameObject gameObject2 = gameObjects.get(j);
                 //添加碰撞器
-                collider.collide(gameObject1, gameObject2);
-                collider1.collide(gameObject1, gameObject2);
+                colliderChain.collide(gameObject1, gameObject2);
+//                collider.collide(gameObject1, gameObject2);
+//                collider1.collide(gameObject1, gameObject2);
             }
         }
 

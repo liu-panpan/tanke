@@ -7,5 +7,5 @@ import com.panpan.tank.GameObject;
  * @Author LiuPanpan
  */
 public interface Collider {
-    void collide(GameObject o1,GameObject o2);
+    boolean collide(GameObject o1,GameObject o2);
 }

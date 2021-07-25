@@ -23,6 +23,8 @@ public class Tank extends GameObject{
     private Group group = Group.BAD;
     private FireStrategy fireStrategy;
     private GameModel gameModel;
+    int preX;
+    int preY;
 
     public Tank(int x, int y, Dir dir,Group group,GameModel gameModel) {
         this.x = x;
@@ -105,6 +107,22 @@ public class Tank extends GameObject{
         this.rect = rect;
     }
 
+    public int getPreX() {
+        return preX;
+    }
+
+    public void setPreX(int preX) {
+        this.preX = preX;
+    }
+
+    public int getPreY() {
+        return preY;
+    }
+
+    public void setPreY(int preY) {
+        this.preY = preY;
+    }
+
     public void paint(Graphics g) {
         if (!alive){
             gameModel.gameObjects.remove(this);
@@ -130,6 +148,8 @@ public class Tank extends GameObject{
     }
 
     private void move() {
+        preX = x;
+        preY = y;
         if (moving){
             switch (dir){
                 case UP:

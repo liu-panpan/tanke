@@ -11,7 +11,7 @@ import com.panpan.tank.Tank;
  */
 public class TankTankCollider implements Collider{
     @Override
-    public void collide(GameObject o1, GameObject o2) {
+    public boolean collide(GameObject o1, GameObject o2) {
         if (o1 instanceof Tank && o2 instanceof Tank){
             Tank tank1 = (Tank) o1;
             Tank tank2 = (Tank) o2;
@@ -21,10 +21,15 @@ public class TankTankCollider implements Collider{
 //        Rectangle rect1 = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
 //        Rectangle rect2 = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);
             if(tank1.getRect().intersects(tank2.getRect())) {
-                tank1.stop();
-                tank2.stop();
+                tank1.setX(tank1.getPreX());
+                tank1.setY(tank1.getPreY());
+                tank2.setX(tank2.getPreX());
+                tank2.setY(tank2.getPreY());
+//                tank1.stop();
+//                tank2.stop();
             }
         }
+        return true;
 
     }
 }
