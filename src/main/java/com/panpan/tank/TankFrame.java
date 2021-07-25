@@ -5,8 +5,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @Date 2021/7/18 18:33
@@ -16,7 +14,7 @@ import java.util.List;
 public class TankFrame extends Frame {
     static final int GAME_WIDTH = 1080;
     static final int GAME_HEIGHT = 960;
-    GameModel gameModel = new GameModel();
+    GameModel gameModel = GameModel.getInstance();
 
     public TankFrame() throws HeadlessException {
         setSize(GAME_WIDTH, GAME_HEIGHT);

@@ -1,8 +1,7 @@
 package com.panpan.tank;
 
-import sun.dc.pr.PRError;
-
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Rectangle;
 
 /**
  * @Date 2021/7/18 22:14
@@ -18,19 +17,18 @@ public class Bullet extends GameObject{
     public static final int HEIGHT =  ResourceMgr.bulletD.getHeight();//子弹的高度
     private boolean isAlive = true;
 //    private TankFrame tankFrame;
-    public GameModel gameModel;
     private Group group = Group.BAD;
     public Rectangle rect = new Rectangle();
-    public Bullet(int x, int y, Dir dir,Group group,GameModel gameModel) {
+    public Bullet(int x, int y, Dir dir,Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.gameModel = gameModel;
         rect.x = this.x;
         rect.y = this.y;
         rect.width = WIDTH;
         rect.height = HEIGHT;
+        GameModel.getInstance().add(this);
     }
 
     public int getX() {
@@ -67,7 +65,7 @@ public class Bullet extends GameObject{
 
     public void paint(Graphics g) {
         if (!isAlive){
-            gameModel.gameObjects.remove(this);
+            GameModel.getInstance().remove(this);
         }else {
             switch (dir) {
                 case UP:
@@ -86,10 +84,6 @@ public class Bullet extends GameObject{
                     break;
             }
         }
-//        Color c = g.getColor();
-//        g.setColor(Color.red);
-//        g.fillOval(x, y, WIDTH, HEIGHT);
-//        g.setColor(c);
         move();
     }
 
@@ -115,24 +109,6 @@ public class Bullet extends GameObject{
         if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) this.isAlive = false;
     }
 
-    /**
-     * 坦克和子弹碰撞检测
-     * @param tank
-     */
-    public void collideWith(Tank tank) {
-        if (this.group == tank.getGroup()){
-            return;
-        }
-//        Rectangle rect1 = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
-//        Rectangle rect2 = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);
-        if(rect.intersects(tank.getRect())) {
-            tank.die();
-            this.die();
-            int eX = tank.getX() + Tank.WIDTH/2 - Explode.WIDTH/2;
-            int eY = tank.getY() + Tank.HEIGHT/2 - Explode.HEIGHT/2;
-            gameModel.gameObjects.add(new Explode(eX, eY, gameModel));
-        }
-    }
 
     public void die() {
         this.isAlive = false;

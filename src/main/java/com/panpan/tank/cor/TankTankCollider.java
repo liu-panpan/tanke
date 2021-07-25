@@ -1,7 +1,5 @@
 package com.panpan.tank.cor;
 
-import com.panpan.tank.Bullet;
-import com.panpan.tank.Explode;
 import com.panpan.tank.GameObject;
 import com.panpan.tank.Tank;
 
@@ -15,18 +13,10 @@ public class TankTankCollider implements Collider{
         if (o1 instanceof Tank && o2 instanceof Tank){
             Tank tank1 = (Tank) o1;
             Tank tank2 = (Tank) o2;
-//            if (tank1.getGroup() == tank2.getGroup()){
-//                return;
-//            }
-//        Rectangle rect1 = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
-//        Rectangle rect2 = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);
+
             if(tank1.getRect().intersects(tank2.getRect())) {
-                tank1.setX(tank1.getPreX());
-                tank1.setY(tank1.getPreY());
-                tank2.setX(tank2.getPreX());
-                tank2.setY(tank2.getPreY());
-//                tank1.stop();
-//                tank2.stop();
+                tank1.back();
+                tank2.back();
             }
         }
         return true;

@@ -22,15 +22,13 @@ public class Tank extends GameObject{
     private Random random = new Random();
     private Group group = Group.BAD;
     private FireStrategy fireStrategy;
-    private GameModel gameModel;
     int preX;
     int preY;
 
-    public Tank(int x, int y, Dir dir,Group group,GameModel gameModel) {
+    public Tank(int x, int y, Dir dir,Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.gameModel = gameModel;
         this.group = group;
         rect.x = this.x;
         rect.y = this.y;
@@ -41,6 +39,7 @@ public class Tank extends GameObject{
         }else {
             this.fireStrategy = new DefaultFireStrategy();
         }
+        GameModel.getInstance().add(this);
     }
 
     public boolean isAlive() {
@@ -91,14 +90,6 @@ public class Tank extends GameObject{
         this.group = group;
     }
 
-    public GameModel getGameModel() {
-        return gameModel;
-    }
-
-    public void setGameModel(GameModel gameModel) {
-        this.gameModel = gameModel;
-    }
-
     public Rectangle getRect() {
         return rect;
     }
@@ -125,7 +116,7 @@ public class Tank extends GameObject{
 
     public void paint(Graphics g) {
         if (!alive){
-            gameModel.gameObjects.remove(this);
+            GameModel.getInstance().remove(this);
         }
         switch (dir){
             case UP:
@@ -199,5 +190,10 @@ public class Tank extends GameObject{
 
     public void stop() {
         this.moving = false;
+    }
+
+    public void back(){
+        x = preX;
+        y = preY;
     }
 }

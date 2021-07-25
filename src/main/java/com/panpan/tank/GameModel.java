@@ -1,9 +1,6 @@
 package com.panpan.tank;
 
-import com.panpan.tank.cor.BulletTankCollider;
-import com.panpan.tank.cor.Collider;
 import com.panpan.tank.cor.ColliderChain;
-import com.panpan.tank.cor.TankTankCollider;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -15,19 +12,39 @@ import java.util.List;
  */
 public class GameModel {
 
-    Collider collider = new BulletTankCollider();
-    Collider collider1 = new TankTankCollider();
-    ColliderChain colliderChain = new ColliderChain();
+    private final static GameModel INSTANCE = new GameModel();
 
-    public GameModel() {
+    private GameModel(){};
+
+    public static GameModel getInstance(){
+        return INSTANCE;
+    }
+
+    static {
+        INSTANCE.init();
+    }
+
+    Tank mainTank;
+    private void init(){
+        mainTank = new Tank(200,400,Dir.UP,Group.GOOD);
         int count = Integer.parseInt(String.valueOf(PropertyMgr.get("initTankCount")));
         //初始化敌方坦克
         for(int i=0; i<count; i++) {
-            add(new Tank(50 + i*80, 200, Dir.DOWN, Group.BAD,this));
+            new Tank(50 + i*80, 200, Dir.DOWN, Group.BAD);
         }
+        // 初始化墙
+        add(new Wall(150, 150, 200, 50));
+        add(new Wall(550, 150, 200, 50));
+        add(new Wall(300, 300, 50, 200));
+        add(new Wall(550, 300, 50, 200));
     }
+    ColliderChain colliderChain = new ColliderChain();
 
-    private void add(GameObject gameObject) {
+//    public GameModel() {
+//
+//    }
+
+    public void add(GameObject gameObject) {
         this.gameObjects.add(gameObject);
     }
 
@@ -35,7 +52,6 @@ public class GameModel {
         this.gameObjects.remove(go);
     }
 
-    Tank mainTank = new Tank(200,400,Dir.UP,Group.GOOD,this);
 //    java.util.List<Explode> explodes = new ArrayList<>();
 //    //子弹容器
 //    java.util.List<Bullet> bullets = new ArrayList<>();
