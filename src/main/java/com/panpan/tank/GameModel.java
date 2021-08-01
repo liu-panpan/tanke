@@ -14,9 +14,12 @@ public class GameModel {
 
     private final static GameModel INSTANCE = new GameModel();
 
-    private GameModel(){};
+    private GameModel() {
+    }
 
-    public static GameModel getInstance(){
+    ;
+
+    public static GameModel getInstance() {
         return INSTANCE;
     }
 
@@ -25,12 +28,13 @@ public class GameModel {
     }
 
     Tank mainTank;
-    private void init(){
-        mainTank = new Tank(200,400,Dir.UP,Group.GOOD);
+
+    private void init() {
+        mainTank = new Tank(200, 400, Dir.UP, Group.GOOD);
         int count = Integer.parseInt(String.valueOf(PropertyMgr.get("initTankCount")));
         //初始化敌方坦克
-        for(int i=0; i<count; i++) {
-            new Tank(50 + i*80, 200, Dir.DOWN, Group.BAD);
+        for (int i = 0; i < count; i++) {
+            new Tank(50 + i * 80, 200, Dir.DOWN, Group.BAD);
         }
         // 初始化墙
         add(new Wall(150, 150, 200, 50));
@@ -38,11 +42,15 @@ public class GameModel {
         add(new Wall(300, 300, 50, 200));
         add(new Wall(550, 300, 50, 200));
     }
+
     ColliderChain colliderChain = new ColliderChain();
 
-//    public GameModel() {
+    //    public GameModel() {
 //
 //    }
+    public Tank getMainTank() {
+        return mainTank;
+    }
 
     public void add(GameObject gameObject) {
         this.gameObjects.add(gameObject);
