@@ -75,11 +75,16 @@ public class TankFrame extends Frame {
                 case KeyEvent.VK_DOWN:
                     bD = true;
                     break;
+                case KeyEvent.VK_S:
+                    gameModel.save();
+                    break;
+                case KeyEvent.VK_L:
+                    gameModel.load();
+                    break;
                 default:
                     break;
             }
             setMainTankDir();
-            new Thread(()->new Audio("audio/tank_move.wav").play()).start();
         }
 
         @Override
@@ -120,6 +125,7 @@ public class TankFrame extends Frame {
                 if (bD) dir = Dir.DOWN;
                 gameModel.mainTank.setDir(dir);
                 gameModel.mainTank.setMoving(true);
+                new Thread(()->new Audio("audio/tank_move.wav").play()).start();
             }
 
         }

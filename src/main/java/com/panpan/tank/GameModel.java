@@ -3,6 +3,12 @@ package com.panpan.tank;
 import com.panpan.tank.cor.ColliderChain;
 
 import java.awt.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,5 +114,45 @@ public class GameModel {
 //        for (int i = 0; i < explodes.size(); i++) {
 //            explodes.get(i).paint(g);
 //        }
+    }
+
+    public void save() {
+        File file = new File("c:/Users/刘盼盼/Desktop/test/tank.data");
+        ObjectOutputStream objectOutputStream = null;
+        try {
+            objectOutputStream = new ObjectOutputStream(new FileOutputStream(file));
+            objectOutputStream.writeObject(mainTank);
+            objectOutputStream.writeObject(gameObjects);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (objectOutputStream != null) {
+                try {
+                    objectOutputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void load() {
+        File file = new File("c:/Users/刘盼盼/Desktop/test/tank.data");
+        ObjectInputStream objectInputStream = null;
+        try {
+            objectInputStream = new ObjectInputStream(new FileInputStream(file));
+            mainTank = (Tank)objectInputStream.readObject();
+            gameObjects = (List)objectInputStream.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (objectInputStream != null) {
+                try {
+                    objectInputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }
