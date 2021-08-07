@@ -2,6 +2,8 @@ package com.panpan.tank.net;
 
 import com.panpan.tank.Dir;
 import com.panpan.tank.Group;
+import com.panpan.tank.Tank;
+import com.panpan.tank.TankFrame;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -91,7 +93,8 @@ class ClientHandler extends SimpleChannelInboundHandler<TankJoinMsg> {
 
     @Override
     public void channelRead0(ChannelHandlerContext ctx, TankJoinMsg msg) throws Exception {
-        System.out.println(msg);
+        Tank t = new Tank(msg);
+        TankFrame.INSTANCE.addTank(t);
     }
 
     @Override
