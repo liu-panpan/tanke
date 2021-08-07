@@ -1,5 +1,7 @@
 package com.panpan.tank.net;
 
+import com.panpan.tank.Dir;
+import com.panpan.tank.Group;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -13,7 +15,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.util.ReferenceCountUtil;
+
+import java.util.UUID;
 
 /**
  * @Date 2021/8/7 15:22
@@ -78,6 +81,7 @@ class ClientChannelInitializer extends ChannelInitializer<SocketChannel> {
     protected void initChannel(SocketChannel ch) throws Exception {
         ch.pipeline()
                 .addLast(new TankJoinMsgEncoder())
+                .addLast(new TankJoinMsgDecoder())
                 .addLast(new ClientHandler());
     }
 
@@ -87,24 +91,11 @@ class ClientHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        ByteBuf buf = null;
-        try {
-            buf = (ByteBuf) msg;
-            byte[] bytes = new byte[buf.readableBytes()];
-            buf.getBytes(buf.readerIndex(), bytes);
-            String msgAccepted = new String(bytes);
-//            ClientFrame.INSTANCE.updateText(msgAccepted);
-            // System.out.println(buf);
-            // System.out.println(buf.refCnt());
-        } finally {
-            if (buf != null)
-                ReferenceCountUtil.release(buf);
-            // System.out.println(buf.refCnt());
-        }
+        System.out.println(msg);
     }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-//        ctx.writeAndFlush(new TankJoinMsg(5, 8));
+        ctx.writeAndFlush(new TankJoinMsg(5, 8, Dir.DOWN, false, Group.GOOD, UUID.randomUUID()));
     }
 }
