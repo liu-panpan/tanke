@@ -2,6 +2,7 @@ package com.panpan.tank;
 
 import java.awt.*;
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * @Date 2021/7/18 21:46
@@ -21,6 +22,7 @@ public class Tank {
     private TankFrame tankFrame;
     private Random random = new Random();
     private Group group = Group.BAD;
+    private UUID id = UUID.randomUUID();
 
     public Tank(int x, int y, Dir dir,Group group,TankFrame tankFrame) {
         this.x = x;
