@@ -159,5 +159,7 @@ public class TankFrame extends Frame {
         }
     }
 
-
+    public Tank getMainTank() {
+        return tank;
+    }
 }

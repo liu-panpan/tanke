@@ -1,7 +1,5 @@
 package com.panpan.tank.net;
 
-import com.panpan.tank.Dir;
-import com.panpan.tank.Group;
 import com.panpan.tank.Tank;
 import com.panpan.tank.TankFrame;
 import io.netty.bootstrap.Bootstrap;
@@ -17,8 +15,6 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-
-import java.util.UUID;
 
 /**
  * @Date 2021/8/7 15:22
@@ -93,12 +89,14 @@ class ClientHandler extends SimpleChannelInboundHandler<TankJoinMsg> {
 
     @Override
     public void channelRead0(ChannelHandlerContext ctx, TankJoinMsg msg) throws Exception {
+        System.out.println(msg);
         Tank t = new Tank(msg);
-        TankFrame.INSTANCE.addTank(t);
+        if(!t.getId().equals(TankFrame.INSTANCE.getMainTank().getId()))
+            TankFrame.INSTANCE.addTank(t);
     }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        ctx.writeAndFlush(new TankJoinMsg(5, 8, Dir.DOWN, false, Group.GOOD, UUID.randomUUID()));
+        ctx.writeAndFlush(new TankJoinMsg(TankFrame.INSTANCE.getMainTank()));
     }
 }
