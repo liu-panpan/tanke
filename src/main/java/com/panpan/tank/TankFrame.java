@@ -6,7 +6,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
@@ -26,7 +28,7 @@ public class TankFrame extends Frame {
     //子弹容器
     List<Bullet> bullets = new ArrayList<>();
     //敌方坦克容器
-    List<Tank> badTanks = new ArrayList<>();
+    Map<UUID,Tank> badTanks = new HashMap<>();
 
     private TankFrame() throws HeadlessException {
         setSize(GAME_WIDTH, GAME_HEIGHT);
@@ -42,22 +44,11 @@ public class TankFrame extends Frame {
     }
 
     public void addTank(Tank t) {
-        for(int i=0; i<badTanks.size(); i++) {
-            if(t.getId().equals(badTanks.get(i).getId())) {
-                return;
-            }
-        }
-        badTanks.add(t);
+        badTanks.put(t.getId(),t);
     }
 
     public Tank findByUUID(UUID id) {
-        for(int i=0; i<badTanks.size(); i++) {
-            if(id.equals(badTanks.get(i).getId())) {
-                return badTanks.get(i);
-            }
-        }
-
-        return null;
+        return badTanks.get(id);
     }
 
     @Override
@@ -72,10 +63,7 @@ public class TankFrame extends Frame {
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paint(g);
         }
-
-        for (int i = 0; i < badTanks.size(); i++) {
-            badTanks.get(i).paint(g);
-        }
+        badTanks.values().forEach(e -> e.paint(g));
 
         for(int i=0; i<bullets.size(); i++) {
             for(int j = 0; j<badTanks.size(); j++){
