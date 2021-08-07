@@ -20,7 +20,7 @@ public class Tank {
     public static final int WIDTH = ResourceMgr.goodTankU.getWidth();//坦克的宽度
     public static final int HEIGHT =  ResourceMgr.goodTankU.getHeight();//坦克的高度
     private boolean alive = true;
-    private boolean moving = true;
+    private boolean moving = false;
     private TankFrame tankFrame;
     private Random random = new Random();
     private Group group = Group.BAD;

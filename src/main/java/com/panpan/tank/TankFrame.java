@@ -8,6 +8,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * @Date 2021/7/18 18:33
@@ -41,7 +42,22 @@ public class TankFrame extends Frame {
     }
 
     public void addTank(Tank t) {
+        for(int i=0; i<badTanks.size(); i++) {
+            if(t.getId().equals(badTanks.get(i).getId())) {
+                return;
+            }
+        }
         badTanks.add(t);
+    }
+
+    public Tank findByUUID(UUID id) {
+        for(int i=0; i<badTanks.size(); i++) {
+            if(id.equals(badTanks.get(i).getId())) {
+                return badTanks.get(i);
+            }
+        }
+
+        return null;
     }
 
     @Override
