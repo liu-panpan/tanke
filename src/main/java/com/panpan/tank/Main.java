@@ -8,7 +8,8 @@ import com.panpan.tank.net.Client;
  */
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        TankFrame tankFrame = new TankFrame();
+        TankFrame tankFrame = TankFrame.INSTANCE;
+        tankFrame.setVisible(true);
 //        int count = Integer.parseInt(String.valueOf(PropertyMgr.get("initTankCount")));
 //        //初始化敌方坦克
 //        for(int i=0; i<count; i++) {

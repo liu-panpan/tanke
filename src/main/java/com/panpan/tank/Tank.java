@@ -1,5 +1,7 @@
 package com.panpan.tank;
 
+import com.panpan.tank.net.TankJoinMsg;
+
 import java.awt.*;
 import java.util.Random;
 import java.util.UUID;
@@ -23,6 +25,16 @@ public class Tank {
     private Random random = new Random();
     private Group group = Group.BAD;
     private UUID id = UUID.randomUUID();
+
+    public Tank(TankJoinMsg msg) {
+        this.x = msg.x;
+        this.y = msg.y;
+        this.dir = msg.dir;
+        this.moving = msg.moving;
+        this.group = msg.group;
+        this.id = msg.id;
+    }
+
 
     public Tank(int x, int y, Dir dir,Group group,TankFrame tankFrame) {
         this.x = x;

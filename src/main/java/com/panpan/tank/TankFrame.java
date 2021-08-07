@@ -15,6 +15,8 @@ import java.util.Random;
  * tank窗口类
  */
 public class TankFrame extends Frame {
+
+    public static final TankFrame INSTANCE = new TankFrame();
     static final int GAME_WIDTH = 1080;
     static final int GAME_HEIGHT = 960;
     Random r = new Random();
@@ -25,11 +27,10 @@ public class TankFrame extends Frame {
     //敌方坦克容器
     List<Tank> badTanks = new ArrayList<>();
 
-    public TankFrame() throws HeadlessException {
+    private TankFrame() throws HeadlessException {
         setSize(GAME_WIDTH, GAME_HEIGHT);
         setTitle("tank war");
         setResizable(false);
-        setVisible(true);
         addKeyListener(new MyKeyListener());
         addWindowListener(new WindowAdapter() {
             @Override
@@ -37,6 +38,10 @@ public class TankFrame extends Frame {
                 System.exit(0);
             }
         });
+    }
+
+    public void addTank(Tank t) {
+        badTanks.add(t);
     }
 
     @Override
