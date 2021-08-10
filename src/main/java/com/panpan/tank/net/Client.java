@@ -56,7 +56,7 @@ public class Client {
         }
     }
 
-    public void send(TankJoinMsg msg) {
+    public void send(Msg msg) {
         channel.writeAndFlush(msg);
     }
 
@@ -76,8 +76,8 @@ class ClientChannelInitializer extends ChannelInitializer<SocketChannel> {
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
         ch.pipeline()
-                .addLast(new TankJoinMsgEncoder())
-                .addLast(new TankJoinMsgDecoder())
+                .addLast(new MsgEncoder())
+                .addLast(new MsgDecoder())
                 .addLast(new ClientHandler());
     }
 

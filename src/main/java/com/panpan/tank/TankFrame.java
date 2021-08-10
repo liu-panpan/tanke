@@ -1,5 +1,8 @@
 package com.panpan.tank;
 
+import com.panpan.tank.net.Client;
+import com.panpan.tank.net.TankStartMovingMsg;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -159,6 +162,7 @@ public class TankFrame extends Frame {
                 tank.setDir(dir);
                 tank.setMoving(true);
             }
+            Client.INSTANCE.send(new TankStartMovingMsg(getMainTank()));
 
         }
     }
