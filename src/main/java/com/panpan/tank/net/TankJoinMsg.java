@@ -45,6 +45,7 @@ public class TankJoinMsg extends Msg{
     public TankJoinMsg() {
     }
 
+    @Override
     public void parse(byte[] bytes) {
         DataInputStream dis = new DataInputStream(new ByteArrayInputStream(bytes));
         try {
@@ -135,5 +136,11 @@ public class TankJoinMsg extends Msg{
                 .append("group=" + group + " | ")
                 .append("]");
         return builder.toString();
+    }
+
+    @Override
+    public MsgType getMsgType() {
+        // TODO Auto-generated method stub
+        return MsgType.TankJoin;
     }
 }
