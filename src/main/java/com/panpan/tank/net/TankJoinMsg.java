@@ -3,6 +3,7 @@ package com.panpan.tank.net;
 import com.panpan.tank.Dir;
 import com.panpan.tank.Group;
 import com.panpan.tank.Tank;
+import com.panpan.tank.TankFrame;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -15,7 +16,7 @@ import java.util.UUID;
  * @Date 2021/8/7 15:28
  * @Author LiuPanpan
  */
-public class TankJoinMsg {
+public class TankJoinMsg extends Msg{
     public int x, y;
     public Dir dir;
     public boolean moving;
@@ -47,9 +48,6 @@ public class TankJoinMsg {
     public void parse(byte[] bytes) {
         DataInputStream dis = new DataInputStream(new ByteArrayInputStream(bytes));
         try {
-            //TODO:�ȶ�TYPE��Ϣ������TYPE��Ϣ����ͬ����Ϣ
-            //�Թ���Ϣ����
-            //dis.readInt();
 
             this.x = dis.readInt();
             this.y = dis.readInt();
@@ -69,6 +67,20 @@ public class TankJoinMsg {
         }
     }
 
+    @Override
+    public void handle() {
+        if(this.id.equals(TankFrame.INSTANCE.getMainTank().getId()) ||
+                TankFrame.INSTANCE.findByUUID(this.id) != null) return;
+        System.out.println(this);
+        Tank t = new Tank(this);
+        TankFrame.INSTANCE.addTank(t);
+
+        //send a new TankJoinMsg to the new joined tank
+        Client.INSTANCE.send(new TankJoinMsg(TankFrame.INSTANCE.getMainTank()));
+
+    }
+
+    @Override
     public byte[] toBytes() {
         ByteArrayOutputStream baos = null;
         DataOutputStream dos = null;

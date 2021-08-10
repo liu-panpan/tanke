@@ -15,7 +15,7 @@ public class Main {
 //        for(int i=0; i<count; i++) {
 //            tankFrame.badTanks.add(new Tank(50 + i*80, 200, Dir.DOWN, Group.BAD,tankFrame));
 //        }
-        new Thread(()->new Audio("audio/war1.wav").loop()).start();
+//        new Thread(()->new Audio("audio/war1.wav").loop()).start();
         new Thread(()-> {
             while(true) {
                 try {
@@ -28,8 +28,7 @@ public class Main {
         }).start();
 
         //or you can new a thread to run this
-        Client c = new Client();
-        c.connect();
+        Client.INSTANCE.connect();
     }
 
 }

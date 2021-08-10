@@ -1,10 +1,7 @@
 package com.panpan.tank.net;
 
-import com.panpan.tank.Tank;
 import com.panpan.tank.TankFrame;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
@@ -21,7 +18,9 @@ import io.netty.channel.socket.nio.NioSocketChannel;
  * @Author LiuPanpan
  */
 public class Client {
+    public static final Client INSTANCE = new Client();
     private Channel channel = null;
+    private Client(){}
 
     public void connect() {
 
@@ -57,9 +56,8 @@ public class Client {
         }
     }
 
-    public void send(String msg) {
-        ByteBuf buf = Unpooled.copiedBuffer(msg.getBytes());
-        channel.writeAndFlush(buf);
+    public void send(TankJoinMsg msg) {
+        channel.writeAndFlush(msg);
     }
 
     public static void main(String[] args) throws Exception {
@@ -68,7 +66,7 @@ public class Client {
     }
 
     public void closeConnect() {
-        this.send("_bye_");
+//        this.send("_bye_");
         //channel.close();
     }
 }
@@ -85,18 +83,11 @@ class ClientChannelInitializer extends ChannelInitializer<SocketChannel> {
 
 }
 
-class ClientHandler extends SimpleChannelInboundHandler<TankJoinMsg> {
+class ClientHandler extends SimpleChannelInboundHandler<Msg> {
 
     @Override
-    public void channelRead0(ChannelHandlerContext ctx, TankJoinMsg msg) throws Exception {
-        if(msg.id.equals(TankFrame.INSTANCE.getMainTank().getId()) ||
-                TankFrame.INSTANCE.findByUUID(msg.id) != null) return;
-        System.out.println(msg);
-        Tank t = new Tank(msg);
-        TankFrame.INSTANCE.addTank(t);
-
-        //send a new TankJoinMsg to the new joined tank
-        ctx.writeAndFlush(new TankJoinMsg(TankFrame.INSTANCE.getMainTank()));
+    public void channelRead0(ChannelHandlerContext ctx, Msg msg) throws Exception {
+        msg.handle();
     }
 
     @Override
