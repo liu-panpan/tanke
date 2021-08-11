@@ -2,6 +2,7 @@ package com.panpan.tank;
 
 import com.panpan.tank.net.Client;
 import com.panpan.tank.net.TankStartMovingMsg;
+import com.panpan.tank.net.TankStopMsg;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -153,6 +154,7 @@ public class TankFrame extends Frame {
         private void setMainTankDir() {
             if (!bL&&!bR&&!bU&&!bD){
                 tank.setMoving(false);
+                Client.INSTANCE.send(new TankStopMsg(getMainTank()));
             }else {
                 Dir dir = Dir.DOWN;
                 if (bL) dir = Dir.LEFT;
@@ -160,9 +162,11 @@ public class TankFrame extends Frame {
                 if (bU) dir = Dir.UP;
                 if (bD) dir = Dir.DOWN;
                 tank.setDir(dir);
+                if (!tank.isMoving()){
+                    Client.INSTANCE.send(new TankStartMovingMsg(getMainTank()));
+                }
                 tank.setMoving(true);
             }
-            Client.INSTANCE.send(new TankStartMovingMsg(getMainTank()));
 
         }
     }
