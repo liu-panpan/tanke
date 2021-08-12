@@ -1,5 +1,7 @@
 package com.panpan.tank;
 
+import com.panpan.tank.net.BulletNewMsg;
+import com.panpan.tank.net.Client;
 import com.panpan.tank.net.TankJoinMsg;
 
 import java.awt.*;
@@ -164,6 +166,11 @@ public class Tank {
         int x = this.x + WIDTH / 2 - Bullet.WIDTH / 2;
         int y = this.y + HEIGHT / 2 - Bullet.HEIGHT / 2;
         tankFrame.bullets.add(new Bullet(x, y, dir,this.group, tankFrame));
+        Bullet b = new Bullet(x, y, this.dir, this.group, this.tankFrame);
+
+        tankFrame.bullets.add(b);
+
+        Client.INSTANCE.send(new BulletNewMsg(b));
         if(this.group == Group.GOOD) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
     }
 

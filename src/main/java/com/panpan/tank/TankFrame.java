@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,10 +71,11 @@ public class TankFrame extends Frame {
         }
         badTanks.values().forEach(e -> e.paint(g));
 
+        //collision detect
+        Collection<Tank> values = badTanks.values();
         for(int i=0; i<bullets.size(); i++) {
-            for(int j = 0; j<badTanks.size(); j++){
-                bullets.get(i).collideWith(badTanks.get(j));
-            }
+            for(Tank t : values )
+                bullets.get(i).collideWith(t);
         }
         for (int i = 0; i < explodes.size(); i++) {
             explodes.get(i).paint(g);
@@ -95,6 +97,9 @@ public class TankFrame extends Frame {
         g.drawImage(offScreenImage, 0, 0, null);
     }
 
+    public void addBullet(Bullet b) {
+        bullets.add(b);
+    }
     //监听键盘
     class MyKeyListener extends KeyAdapter {
         //判断方向是否按下
@@ -109,20 +114,23 @@ public class TankFrame extends Frame {
             switch (key){
                 case KeyEvent.VK_LEFT:
                     bL = true;
+                    setMainTankDir();
                     break;
                 case KeyEvent.VK_RIGHT:
                     bR = true;
+                    setMainTankDir();
                     break;
                 case KeyEvent.VK_UP:
                     bU = true;
+                    setMainTankDir();
                     break;
                 case KeyEvent.VK_DOWN:
                     bD = true;
+                    setMainTankDir();
                     break;
                 default:
                     break;
             }
-            setMainTankDir();
             new Thread(()->new Audio("audio/tank_move.wav").play()).start();
         }
 
@@ -133,15 +141,19 @@ public class TankFrame extends Frame {
             switch (key){
                 case KeyEvent.VK_LEFT:
                     bL = false;
+                    setMainTankDir();
                     break;
                 case KeyEvent.VK_RIGHT:
                     bR = false;
+                    setMainTankDir();
                     break;
                 case KeyEvent.VK_UP:
                     bU = false;
+                    setMainTankDir();
                     break;
                 case KeyEvent.VK_DOWN:
                     bD = false;
+                    setMainTankDir();
                     break;
                 case KeyEvent.VK_CONTROL:
                     tank.fire();
