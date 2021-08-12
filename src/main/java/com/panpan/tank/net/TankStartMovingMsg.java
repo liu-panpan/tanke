@@ -9,6 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.StringJoiner;
 import java.util.UUID;
 
 /**
@@ -144,5 +145,15 @@ public class TankStartMovingMsg extends Msg{
     @Override
     public MsgType getMsgType() {
         return MsgType.TankStartMoving;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", TankStartMovingMsg.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("x=" + x)
+                .add("y=" + y)
+                .add("dir=" + dir)
+                .toString();
     }
 }

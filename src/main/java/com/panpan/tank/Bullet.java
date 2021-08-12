@@ -1,8 +1,7 @@
 package com.panpan.tank;
 
-import sun.dc.pr.PRError;
-
 import java.awt.*;
+import java.util.UUID;
 
 /**
  * @Date 2021/7/18 22:14
@@ -16,6 +15,7 @@ public class Bullet {
     private static final int SPEND = PropertyMgr.getInt("bulletSpeed");
     public static final int WIDTH = ResourceMgr.bulletD.getWidth();//子弹的宽度
     public static final int HEIGHT =  ResourceMgr.bulletD.getHeight();//子弹的高度
+    private UUID id = UUID.randomUUID();
     private boolean isAlive = true;
     private TankFrame tankFrame;
     private Group group = Group.BAD;
@@ -62,6 +62,14 @@ public class Bullet {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public void paint(Graphics g) {

@@ -1,6 +1,7 @@
 package com.panpan.tank;
 
 import com.panpan.tank.net.Client;
+import com.panpan.tank.net.TankDirChangedMsg;
 import com.panpan.tank.net.TankStartMovingMsg;
 import com.panpan.tank.net.TankStopMsg;
 
@@ -152,20 +153,28 @@ public class TankFrame extends Frame {
         }
 
         private void setMainTankDir() {
+            //save the old dir
+            Dir dir = tank.getDir();
+
             if (!bL&&!bR&&!bU&&!bD){
                 tank.setMoving(false);
                 Client.INSTANCE.send(new TankStopMsg(getMainTank()));
             }else {
-                Dir dir = Dir.DOWN;
-                if (bL) dir = Dir.LEFT;
-                if (bR) dir = Dir.RIGHT;
-                if (bU) dir = Dir.UP;
-                if (bD) dir = Dir.DOWN;
-                tank.setDir(dir);
+                if (bL)
+                    tank.setDir(Dir.LEFT);
+                if (bU)
+                    tank.setDir(Dir.UP);
+                if (bR)
+                    tank.setDir(Dir.RIGHT);
+                if (bD)
+                    tank.setDir(Dir.DOWN);
                 if (!tank.isMoving()){
                     Client.INSTANCE.send(new TankStartMovingMsg(getMainTank()));
                 }
                 tank.setMoving(true);
+                if(dir != tank.getDir()) {
+                    Client.INSTANCE.send(new TankDirChangedMsg(tank));
+                }
             }
 
         }
